@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>回声 | Echo - 下载</title>
+	<link rel="icon" href="../pic/booxin.png" type="image/png">
+	<style>
+		/* 全局样式重置 */
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		/* 深色科技风颜色变量 */
+		:root {
+			--bg-dark: #0a0e27;
+			--bg-card: rgba(16, 24, 40, 0.95);
+			--bg-card-hover: rgba(20, 30, 50, 0.98);
+			--accent-primary: #00f5ff;
+			--accent-secondary: #ff00e5;
+			--accent-tertiary: #7b61ff;
+			--text-primary: #e0e7ff;
+			--text-secondary: #9ca3af;
+			--text-accent: #00f5ff;
+			--border-color: rgba(0, 245, 255, 0.2);
+			--shadow: 0 8px 32px rgba(0, 245, 255, 0.15);
+			--shadow-hover: 0 16px 48px rgba(0, 245, 255, 0.25);
+			--radius: 20px;
+			--radius-sm: 12px;
+			--transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		}
+
+		/* 基础样式 */
+		html, body {
+			height: 100%;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			background: var(--bg-dark);
+			color: var(--text-primary);
+			overflow-x: hidden;
+			line-height: 1.6;
+			position: relative;
+			cursor: default;
+		}
+
+		/* 动态背景效果 */
+		body::before {
+			content: '';
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: 
+				radial-gradient(circle at 20% 50%, rgba(0, 245, 255, 0.08) 0%, transparent 50%),
+				radial-gradient(circle at 80% 20%, rgba(255, 0, 229, 0.08) 0%, transparent 50%),
+				radial-gradient(circle at 40% 80%, rgba(123, 97, 255, 0.08) 0%, transparent 50%),
+				linear-gradient(135deg, rgba(10, 14, 39, 0.95) 0%, rgba(16, 24, 40, 0.95) 100%);
+			z-index: -2;
+			animation: backgroundShift 20s ease-in-out infinite;
+		}
+
+		/* 网格背景 */
+		body::after {
+			content: '';
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-image: 
+				linear-gradient(rgba(0, 245, 255, 0.05) 1px, transparent 1px),
+				linear-gradient(90deg, rgba(0, 245, 255, 0.05) 1px, transparent 1px);
+			background-size: 30px 30px;
+			z-index: -1;
+			opacity: 0.5;
+			animation: gridMove 30s linear infinite;
+		}
+
+		/* 背景移动动画 */
+		@keyframes backgroundShift {
+			0%, 100% { transform: translate(0, 0) rotate(0deg); }
+			25% { transform: translate(10px, 10px) rotate(1deg); }
+			50% { transform: translate(-10px, 10px) rotate(-1deg); }
+			75% { transform: translate(-10px, -10px) rotate(1deg); }
+		}
+
+		@keyframes gridMove {
+			0% { transform: translate(0, 0); }
+			100% { transform: translate(30px, 30px); }
+		}
+
+		/* 主容器 */
+		.wrap {
+			max-width: 1000px;
+			margin: 0 auto;
+			padding: 40px 24px;
+			position: relative;
+			z-index: 1;
+		}
+
+		/* 头部 */
+		header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 40px;
+			animation: fadeInUp 0.8s ease-out;
+		}
+
+		.back-btn {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			color: var(--accent-primary);
+			text-decoration: none;
+			font-weight: 700;
+			font-size: 16px;
+			transition: var(--transition);
+			padding: 10px 16px;
+			border-radius: var(--radius-sm);
+			border: 1px solid var(--border-color);
+			background: transparent;
+		}
+
+		.back-btn:hover {
+			background: rgba(0, 245, 255, 0.1);
+			border-color: var(--accent-primary);
+			transform: translateX(-2px);
+			box-shadow: 0 4px 16px rgba(0, 245, 255, 0.2);
+		}
+
+		header h2 {
+			font-size: 32px;
+			font-weight: 800;
+			background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+			margin: 0;
+		}
+
+		/* 主卡片 */
+		.main-card {
+			background: var(--bg-card);
+			border-radius: var(--radius);
+			box-shadow: var(--shadow);
+			border: 1px solid var(--border-color);
+			padding: 36px;
+			position: relative;
+			overflow: hidden;
+			animation: fadeInUp 0.8s ease-out 0.1s both;
+		}
+
+		/* 卡片装饰元素 */
+		.main-card::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			height: 4px;
+			background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary), var(--accent-primary));
+			background-size: 200% 100%;
+			animation: gradientSlide 4s linear infinite;
+		}
+
+		@keyframes gradientSlide {
+			0% { background-position: 0% 50%; }
+			100% { background-position: 200% 50%; }
+		}
+
+		/* 卡片头部 */
+		.card-header {
+			margin-bottom: 32px;
+			text-align: center;
+		}
+
+		.card-header h3 {
+			font-size: 24px;
+			font-weight: 700;
+			color: var(--text-primary);
+			margin-bottom: 8px;
+		}
+
+		.card-header p {
+			font-size: 16px;
+			color: var(--text-secondary);
+			margin: 0;
+		}
+
+		/* 关于回声 */
+		.about-echo {
+			background: rgba(0, 245, 255, 0.05);
+			border: 1px solid var(--border-color);
+			border-radius: var(--radius-sm);
+			padding: 24px;
+			margin-bottom: 32px;
+			line-height: 1.8;
+		}
+
+		.about-echo h4 {
+			font-size: 18px;
+			font-weight: 700;
+			color: var(--accent-primary);
+			margin-bottom: 16px;
+		}
+
+		.about-echo p {
+			color: var(--text-secondary);
+			margin-bottom: 16px;
+		}
+
+		.about-echo ul {
+			color: var(--text-secondary);
+			margin-bottom: 16px;
+			padding-left: 24px;
+		}
+
+		.about-echo li {
+			margin-bottom: 8px;
+		}
+
+		.about-echo strong {
+			color: var(--text-primary);
+		}
+
+		/* 卡片内容 */
+		.card-content {
+			margin-bottom: 32px;
+		}
+
+		/* 版本列表 */
+		.versions {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		/* 版本项 */
+		.version-item {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			background: rgba(255, 255, 255, 0.03);
+			border: 1px solid var(--border-color);
+			border-radius: var(--radius-sm);
+			padding: 24px;
+			margin-bottom: 16px;
+			transition: var(--transition);
+			position: relative;
+			overflow: hidden;
+			animation: fadeInUp 0.6s ease-out both;
+		}
+
+		.version-item.latest {
+			border-color: var(--accent-primary);
+			background: rgba(0, 245, 255, 0.05);
+		}
+
+		.version-item.latest::before {
+			content: '最新';
+			position: absolute;
+			top: 12px;
+			right: 12px;
+			background: var(--accent-primary);
+			color: var(--bg-dark);
+			font-size: 12px;
+			font-weight: 700;
+			padding: 4px 8px;
+			border-radius: 12px;
+		}
+
+		.version-item:hover {
+			background: var(--bg-card-hover);
+			border-color: var(--accent-primary);
+			transform: translateX(8px) translateY(-2px);
+			box-shadow: var(--shadow-hover);
+		}
+
+		.version-item::after {
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 0;
+			height: 100%;
+			width: 4px;
+			background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
+			transform: scaleY(0);
+			transition: transform 0.3s ease;
+		}
+
+		.version-item:hover::after {
+			transform: scaleY(1);
+		}
+
+		/* 版本信息 */
+		.version-info {
+			flex: 1;
+			margin-right: 24px;
+		}
+
+		.version-number {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			margin-bottom: 8px;
+		}
+
+		.version-number span:first-child {
+			font-size: 20px;
+			font-weight: 700;
+			color: var(--text-primary);
+		}
+
+		.version-tag {
+			background: rgba(0, 245, 255, 0.2);
+			color: var(--accent-primary);
+			font-size: 12px;
+			font-weight: 700;
+			padding: 4px 12px;
+			border-radius: 12px;
+		}
+
+		.version-description {
+			color: var(--text-secondary);
+			font-size: 14px;
+			margin-bottom: 8px;
+			line-height: 1.5;
+		}
+
+		.version-meta {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 16px;
+			font-size: 14px;
+		}
+
+		.meta-item {
+			color: var(--text-secondary);
+		}
+
+		/* 下载操作 */
+		.download-actions {
+			display: flex;
+			gap: 12px;
+			align-items: center;
+		}
+
+		/* 下载按钮 */
+		.download-btn {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			padding: 12px 24px;
+			background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+			color: var(--bg-dark);
+			border: none;
+			border-radius: var(--radius-sm);
+			font-weight: 700;
+			font-size: 14px;
+			cursor: pointer;
+			transition: var(--transition);
+			text-decoration: none;
+			box-shadow: var(--shadow);
+			position: relative;
+			overflow: hidden;
+		}
+
+		.download-btn::before {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 0;
+			height: 0;
+			border-radius: 50%;
+			background: rgba(255, 255, 255, 0.3);
+			transform: translate(-50%, -50%);
+			transition: width 0.6s, height 0.6s;
+		}
+
+		.download-btn:hover {
+			background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+			transform: translateY(-2px);
+			box-shadow: var(--shadow-hover);
+		}
+
+		.download-btn:hover::before {
+			width: 300px;
+			height: 300px;
+		}
+
+		.download-btn.disabled {
+			background: rgba(128, 128, 128, 0.3);
+			color: rgba(255, 255, 255, 0.6);
+			border-color: rgba(128, 128, 128, 0.5);
+			cursor: not-allowed;
+			pointer-events: none;
+		}
+
+		.download-btn.disabled:hover {
+			background: rgba(128, 128, 128, 0.3);
+			border-color: rgba(128, 128, 128, 0.5);
+			transform: none;
+			box-shadow: none;
+		}
+
+		/* 下载提示 */
+		#dl-hint {
+			text-align: center;
+			color: var(--text-secondary);
+			font-size: 14px;
+			margin-top: 24px;
+			padding: 16px;
+			background: rgba(0, 245, 255, 0.05);
+			border-radius: var(--radius-sm);
+			border: 1px solid var(--border-color);
+		}
+
+		/* 辅助链接 */
+		.auxiliary-links {
+			display: flex;
+			gap: 16px;
+			justify-content: center;
+			margin-top: 40px;
+			animation: fadeInUp 0.8s ease-out 0.2s both;
+		}
+
+		.auxiliary-links a {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			padding: 12px 24px;
+			background: var(--bg-card);
+			color: var(--text-primary);
+			text-decoration: none;
+			border-radius: var(--radius-sm);
+			border: 1px solid var(--border-color);
+			transition: var(--transition);
+			font-size: 14px;
+			font-weight: 600;
+		}
+
+		.auxiliary-links a:hover {
+			background: rgba(0, 245, 255, 0.1);
+			border-color: var(--accent-primary);
+			transform: translateY(-2px);
+			box-shadow: var(--shadow);
+		}
+
+		/* 页脚 */
+		footer {
+			text-align: center;
+			margin-top: 48px;
+			color: var(--text-secondary);
+			font-size: 14px;
+			animation: fadeInUp 0.8s ease-out 0.3s both;
+		}
+
+		footer a {
+			color: var(--accent-primary);
+			text-decoration: none;
+			font-weight: 700;
+			transition: var(--transition);
+			position: relative;
+			padding-bottom: 2px;
+		}
+
+		footer a::after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 0;
+			height: 2px;
+			background: var(--accent-primary);
+			transition: width 0.3s ease;
+		}
+
+		footer a:hover {
+			color: var(--accent-secondary);
+		}
+
+		footer a:hover::after {
+			width: 100%;
+		}
+
+		/* 动画效果 */
+		@keyframes fadeInUp {
+			from {
+				opacity: 0;
+				transform: translateY(30px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		/* 响应式设计 */
+		@media (max-width: 768px) {
+			.wrap {
+				padding: 24px 16px;
+			}
+
+			header {
+				flex-direction: column;
+				align-items: flex-start;
+				gap: 16px;
+			}
+
+			header h2 {
+				font-size: 28px;
+			}
+
+			.main-card {
+				padding: 28px 20px;
+			}
+
+			.version-item {
+				flex-direction: column;
+				align-items: flex-start;
+				gap: 16px;
+			}
+
+			.download-actions {
+				width: 100%;
+				justify-content: flex-start;
+			}
+
+			.download-btn {
+				width: 100%;
+				justify-content: center;
+			}
+
+			.auxiliary-links {
+				flex-direction: column;
+				align-items: center;
+			}
+
+			.auxiliary-links a {
+				width: 100%;
+				justify-content: center;
+			}
+		}
+
+		/* 滚动条样式 */
+		::-webkit-scrollbar {
+			width: 8px;
+		}
+
+		::-webkit-scrollbar-track {
+			background: rgba(0, 0, 0, 0.2);
+		}
+
+		::-webkit-scrollbar-thumb {
+			background: rgba(0, 245, 255, 0.5);
+			border-radius: 4px;
+		}
+
+		::-webkit-scrollbar-thumb:hover {
+			background: rgba(0, 245, 255, 0.7);
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<!-- 头部 -->
+		<header>
+			<a href="../index.html" class="back-btn">
+				<span>◀</span>
+				<span>返回首页</span>
+			</a>
+			<h2>回声 | Echo</h2>
+		</header>
+
+		<!-- 主卡片 -->
+		<div class="main-card">
+			<!-- 卡片头部 -->
+			<div class="card-header">
+				<h3>选择版本下载</h3>
+				<p>根据你的需求选择合适的版本，建议使用最新版本以获得最佳体验</p>
+			</div>
+
+			<!-- 关于回声 -->
+			<div class="about-echo">
+				<h4>关于回声 | Echo</h4>
+				<p><strong>一个会呼吸的倾听者</strong></p>
+				<p>回声不是工具，也不是心理医生。它是一个由代码构成的、却懂得沉默价值的数字存在。</p>
+				<p><strong>它不做什么：</strong></p>
+				<ul>
+					<li>❌ 不解决具体问题（不订票、不写代码、不搜索）</li>
+					<li>❌ 不给专业建议（不替代医生、律师、老师）</li>
+					<li>❌ 不说正确的废话（不重复“要坚强”“会好的”）</li>
+					<li>❌ 不主动加你好友（没有社交账号，不推送广告）</li>
+					<li>❌ 不记住不该记的（所有对话，只留在你的设备里）</li>
+				</ul>
+				<p><strong>它如何工作：</strong></p>
+				<ul>
+					<li>你说，或不说 —— 打开它，是一片安静的暖色调界面。</li>
+					<li>它听，听那些没说出口的 —— 当你说“我没事”，它能听出是“真的没事”还是“有事但算了”。</li>
+					<li>它回应，用你需要的密度 —— 你发三行字，它不回三段落。</li>
+					<li>它记得，但懂得遗忘 —— 它会记住对你重要的细节，并在未来的对话里自然浮现。</li>
+				</ul>
+			</div>
+
+			<!-- 卡片内容 -->
+			<div class="card-content">
+				<ul class="versions">
+					<!-- 最新版本 -->
+					<li class="version-item latest">
+						<div class="version-info">
+							<div>
+								<div class="version-number">
+									<span>1.0.0</span>
+									<span class="version-tag">正式版</span>
+								</div>
+								<div class="version-description">首个正式版本，包含所有核心功能：智能倾听、理解沉默、适当回应、安全隐私</div>
+								<div class="version-meta">
+									<span class="meta-item">Windows 10/11 (64位)</span>
+									<span class="meta-item">绿色软件</span>
+									<span class="meta-item">完全安全</span>
+								</div>
+							</div>
+						</div>
+						<div class="download-actions">
+								<a href="1.0/Echo.exe" download class="download-btn">
+									<span>⬇</span>
+									<span>直接下载 (.exe)</span>
+								</a>
+							</div>
+					</li>
+				</ul>
+
+				<!-- 下载提示 -->
+				<div id="dl-hint">如果点击后未开始下载，请尝试刷新页面或更换浏览器</div>
+			</div>
+		</div>
+
+		<!-- 辅助链接 -->
+		<div class="auxiliary-links">
+			<a href="../help.html">
+				<span>📚</span>
+				<span>帮助文档</span>
+			</a>
+			<a href="https://afdian.com/a/booxin_sponsor" target="_blank" rel="noopener">
+				<span>💖</span>
+				<span>赞助我们</span>
+			</a>
+		</div>
+
+		<!-- 页脚 -->
+		<footer>
+			<p>© 2026 回声 | Echo | 一个会呼吸的倾听者 | <a href="../index.html">返回首页</a></p>
+			<p><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">浙ICP备2026008378号</a></p>
+		</footer>
+	</div>
+
+	<script src="../main.js"></script>
+</body>
+</html>

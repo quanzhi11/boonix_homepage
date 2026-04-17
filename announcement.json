@@ -1,0 +1,18 @@
+{
+  "announcements": [
+    {
+      "id": "10",
+      "title": "Booxin Launcher 2.7.0 正式版发布",
+      "content": "我们很高兴地宣布，Booxin Launcher 2.7.0 正式版已发布！因陶瓦联机更新，修改了联机相关代码，确保与最新版本的陶瓦联机兼容。请前往下载页面获取最新版本。",
+      "date": "2026-04-16",
+      "type": "important"
+    },
+    {
+      "id": "9",
+      "title": "Booxin Launcher 2.6.0 正式版发布",
+      "content": "我们很高兴地宣布，Booxin Launcher 2.6.0 正式版已发布！本次更新重构了多人游戏模块，基于陶瓦联机(EasyTier)实现，新增身份识别系统和中继服务，支持同机多人联机和重入修复，优化了版本选择和Java下载功能。请前往下载页面获取最新版本。",
+      "date": "2026-04-12",
+      "type": "important"
+    }
+  ]
+}
